@@ -1,0 +1,109 @@
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Kuwired</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        .login-card h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: red; /* Set header text color to red */
+        }
+
+        /* Style for the animated welcome message */
+        #welcome-message {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        /* Style for messages */
+        .message {
+            text-align: center;
+            color: red; /* Red color for messages */
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100%;">
+        <div class="login-card">
+            <!-- Animated welcome message -->
+            <div style = "color:#e41d21;;"id="welcome-message" ></div>
+
+            <!-- Display messages -->
+            {% if messages %}
+            <div class="message">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <h2 class="text-center">Login</h2>
+            
+            <form method="POST" action="{% url 'login' %}" class = "jumbotron">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Username or Email</label>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Enter username or email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn btn-success btn-block"style="background:#740101;" >Login</button>
+            </form>
+             <div >
+                <a class="forgot-password text-left mt-2" href="{% url "register" %}" style = "color:blue">Create Account </a>
+                <a class="forgot-password text-right mt-2" href="#">Forgot password?</a>
+        
+             </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for displaying the welcome message -->
+    <script>
+        const welcomeMessage = "Welcome to Kuwired";
+        const words = welcomeMessage.split(" ");
+        let index = 0;
+        const display = document.getElementById('welcome-message');
+
+        function showNextWord() {
+            if (index < words.length) {
+                display.innerHTML += words[index] + " ";
+                index++;
+                setTimeout(showNextWord, 500); // Show one word every 500ms
+            }
+        }
+
+        // Start the animation when the page loads
+        window.onload = showNextWord;
+    </script>
+
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>

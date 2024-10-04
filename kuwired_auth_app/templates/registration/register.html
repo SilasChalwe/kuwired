@@ -1,0 +1,41 @@
+{% extends "general/layout.html" %}
+
+{% load  static  %} 
+{% block content %}
+<body>
+    <div class="container">
+     <h2 class="text-center">Register</h2>
+     <style> 
+            li{
+                list-style:none;
+            }
+            
+            .errorlist ,.nonfield{
+                color: red;
+                margin-top: 0%;
+            }
+                
+            .btn {
+              background-color:#740101;
+            }
+            .btn:hover{
+              background-color: #b00303;
+            }
+            </style> 
+         
+     <form action="{% url 'register' %}" method="POST" class="jumbotron">
+         {% csrf_token %}
+         <div class="row gy-4">
+           {{form.as_p}}
+        
+         <button class="btn btn-success btn-block"  type="submit">Register</button>
+         </div>
+     </form>
+    </div>
+
+    
+     
+ </body>
+ 
+{% endblock content %}
+

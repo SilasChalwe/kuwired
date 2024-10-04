@@ -1,0 +1,243 @@
+{% extends "general/layout.html" %}
+
+{% load  static  %} 
+
+{% block content %}
+<body class="index-page">
+  
+  <main class="main">
+    <!-- Hero Section -->
+    <section id="hero" class="hero section">
+       {% for image in clients  %}
+        {% if image.name == 'hero' %}
+         <img src="{{image.image.url}} " alt="{{image.name}}" data-aos="fade-in" class="">
+        {% endif %}
+       
+       {% endfor %}
+
+      <div class="container">
+        <div class="row justify-content-center" data-aos="zoom-out">
+          <div class="col-xl-7 col-lg-9 text-center">
+            <h1>{{hero.headline}}</h1>
+            <p>{{hero.subheadline}}</p>
+            <p><span style="font-family: 'Times New Roman', Times, serif; color:lightblue;">{{hero.motion}}</span> </p>
+          </div>
+        </div>
+        <div class="text-center" data-aos="zoom-out" data-aos-delay="100">
+          <a href="{{hero.cta_button_url}}" class="btn-get-started">{{hero.cta_button_text}}</a>
+        </div>
+
+        <div class="row gy-4 mt-5">
+            {% for service in services %}
+              <div class="col-md-6 col-lg-3" data-aos="zoom-out" data-aos-delay="200"></div>
+                <div class="icon-box">
+                  <div class="icon"><i class="{{service.icon}}"></i></div>
+                  <h4 class="title"><a href="">{{service.title}}</a></h4>
+                  <p class="description">{{service.description}}</p>
+                </div>
+              </div>
+            {% endfor %}
+        </div>
+      </div>
+<a href="{% url 'kuwired-about' %}" class=""> about</a>
+    </section><!-- end of Hero Section -->
+    
+    
+    
+    <!-- Clients Section -->
+    <section id="clients" class="clients section light-background">
+      <div class="container" data-aos="fade-up">
+        <div class="row gy-4">
+           {% for client in clients %}
+          <div class="col-xl-2 col-md-3 col-6 client-logo">
+          <img src="{{client.image.url}}" class="img-fluid" alt="{{client.name}}">
+          </div>
+           {% endfor %}
+        </div>
+      </div>
+    </section><!-- End of Clients Section -->
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Testimonials</h2>
+        <p>Hear what our customer say about our product and services</p>
+      </div>
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="swiper init-swiper" data-speed="600" data-delay="5000" data-breakpoints="{ &quot;320&quot;: { &quot;slidesPerView&quot;: 1, &quot;spaceBetween&quot;: 40 }, &quot;1200&quot;: { &quot;slidesPerView&quot;: 3, &quot;spaceBetween&quot;: 40 } }">
+          <script type="application/json" class="swiper-config">
+            {
+              "loop": true,
+              "speed": 600,
+              "autoplay": {
+                "delay": 5000
+              },
+              "slidesPerView": "auto",
+              "pagination": {
+                "el": ".swiper-pagination",
+                "type": "bullets",
+                "clickable": true
+              },
+              "breakpoints": {
+                "320": {
+                  "slidesPerView": 1,
+                  "spaceBetween": 40
+                },
+                "1200": {
+                  "slidesPerView": 3,
+                  "spaceBetween": 20
+                }
+              }
+            }
+          </script>
+          <div class="swiper-wrapper">
+          {% for testimonial in testimonials %}
+              <div class="swiper-slide">
+                  <div class="testimonial-item" >
+                      <p>
+                        <i class=" bi bi-quote quote-icon-left"></i>
+                        <span>{{ testimonial.client_feedback }}</span>
+                        <i class="bi bi-quote quote-icon-right"></i>
+                      </p>
+                      <img src=" {{testimonial.image.url}} " class="testimonial-img" alt="">
+                      <h3>{{testimonial.client_name}}</h3>
+                      <h4>{{testimonial.role}} &amp;{{testimonial.client_company }}</h4>
+                  </div>
+                </div><!-- End testimonial item -->
+          {% endfor %}
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+      </div>
+    </section><!-- /Testimonials Section -->
+
+
+    <!-- Call To Action Section -->
+    <section id="call-to-action" class="call-to-action section accent-background">
+
+      <div class="container">
+        <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
+          <div class="col-xl-10">
+            <div class="text-center">
+              <h3>{{cta.headline}}</h3>
+              <h2>{{cta.subheadline}}</h2>
+              <a class="cta-btn" href="{{cta.cta_button_url}}">{{cta.cta_button_text}}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section><!-- /Call To Action Section -->
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio section">
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Explore Our Products and Projects</h2>
+        <p>Discover our wide range of products, from web applications to mobile solutions.</p>
+      </div><!-- End Section Title -->
+      <div class="container">
+        <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+          <!-- End Product Filters -->
+          <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
+            <li data-filter="*" class="filter-active">All</li>
+            <li data-filter=".app">App</li>
+            <li data-filter=".card">Card</li>
+            <li data-filter=".web">Web</li>
+          </ul><!-- End Product Filters -->
+          <!-- Start Product Item -->
+          {% for product in products_items %}
+          <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item {{ product.project_filter_branding }} ">
+              <img src="{{ product.project_image.url }}" class="img-fluid" alt="{{ product.project_name}}">
+              <div class="portfolio-info">
+                <h4>{{product.project_name}}</h4>
+                <p>{{product.project_description}}</p>
+                <a href="{{ product.project_image.url }}" title="{{ product.project_name}}" data-gallery="portfolio-gallery-{{  product.filter_branding }}" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="product-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              </div>
+            </div><!-- End Product Item -->
+            {% endfor %}
+              <style>
+                  .image-container {
+                      width: 100%;
+                      height: 250px;
+                      overflow: hidden;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                  }
+
+                  .image-container img {
+                      width: 100%;
+                      height: 100%;
+                      object-fit: cover;
+                  }
+
+                  .card-img {
+                      max-width: 100%;
+                      max-height: 100%;
+                  }
+
+                  .link_btn {
+                      display: inline-block;
+                      margin-top: 10px;
+                      padding: 10px 20px;
+                      background-color: #007bff;
+                      color: #fff;
+                      text-align: center;
+                      text-decoration: none;
+                      border-radius: 4px;
+                  }
+
+                  .link_btn:hover {
+                      background-color: #0056b3;
+                  }
+              </style>
+
+          </div><!-- End Portfolio Container -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Portfolio Section -->
+
+    <!-- Faq Section -->
+    <section id="faq" class="faq section light-background">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Frequently Asked Questions</h2>
+      </div>
+
+      <div class="container">
+        <div class="row justify-content-center">
+
+          <div class="col-lg-10" data-aos="fade-up" data-aos-delay="100">
+            <div class="faq-container">
+            {% for faq in faqs  %}
+              <div class="faq-item faq-active">
+                <h3>{{faq.question}}?</h3>
+                <div class="faq-content">
+                  <p>{{faq.answer}}</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div>
+            {% endfor %}
+            </div>
+          </div><!-- End Faq Column-->
+
+        </div>
+
+      </div>
+    </section><!--end of the Faq Section -->
+  </main>
+</body>
+{% endblock content %}
+

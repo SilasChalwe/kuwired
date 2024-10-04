@@ -1,0 +1,44 @@
+{% extends "general/layout.html" %}
+{% load static %}
+
+{% block content %}
+
+    <!-- Team Section -->
+    <section id="team" class="team section light-background">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>Team</h2>
+          <p>meet our dedicated teams of developers</p>
+        </div><!-- End Section Title -->
+  
+        <div class="container">
+  
+          <div class="row gy-4">
+            {% for team in teams  %}
+             <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+              <div class="team-member">
+                <div class="member-img">
+                  <img src="{{team.image.url}}" class="img-fluid" alt="">
+                  <div class="social">
+                    <a href=""><i class="bi bi-twitter-x"></i></a>
+                    <a href=""><i class="bi bi-facebook"></i></a>
+                    <a href=""><i class="bi bi-instagram"></i></a>
+                    <a href=""><i class="bi bi-linkedin"></i></a>
+                  </div>
+                </div>
+                <div class="member-info">
+                  <h4>{{team.name}}</h4>
+                  <span>{{team.role}}</span>
+                </div>
+              </div>
+            </div><!-- End Team Member -->
+            {% endfor %}
+          </div>
+  
+        </div>
+  
+      </section><!-- /Team Section -->
+  
+
+{% endblock content %}

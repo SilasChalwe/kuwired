@@ -1,0 +1,34 @@
+{% extends "general/layout.html" %}
+
+{% load  static  %} 
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <h2>Contact Information</h2>
+        <p><strong>Address:</strong> Kuwired Tech, 1234 Innovation Street, Tech City, 56789</p>
+        <p><strong>Call Us:</strong> +123 456 7890 / +987 654 3210</p>
+        <p><strong>Email:</strong> info@kuwired.tech</p>
+    </div>
+    
+
+    <div class="col-md-6">
+        <h2>Contact Us</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+    </div>
+</div>
+
+{% if messages %}
+<script>
+    window.onload = function() {
+        alert("{{ messages|first }}");
+    }
+</script>
+{% endif %}
+
+{% endblock %}
