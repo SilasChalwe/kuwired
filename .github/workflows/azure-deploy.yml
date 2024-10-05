@@ -1,8 +1,4 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-# More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
-
-name: Build and deploy Python app to Azure Web App - kuwired
+name: Build and deploy Python app to Azure Web App - azuredjangotutorial
 
 on:
   push:
@@ -15,29 +11,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v2
 
       - name: Set up Python version
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v1
         with:
           python-version: '3.11'
 
       - name: Create and start virtual environment
-        run: python -m venv venv
-      
-      - name: Install dependencies
-        run: venv/bin/pip install -r requirements.txt
+        run: |
+          python -m venv venv
+          source venv/bin/activate
 
-      - name: Run migrations
-        run: venv/bin/python manage.py migrate
+      - name: Install dependencies
+        run: pip install -r requirements.txt
 
       - name: Run collectstatic
-        run: venv/bin/python manage.py collectstatic --noinput
-        
-      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
-      
+        run: python manage.py collectstatic --noinput
+
       - name: Upload artifact for deployment jobs
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: python-app
           path: |
@@ -53,15 +46,22 @@ jobs:
 
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v2
         with:
           name: python-app
           path: .
-          
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
-          app-name: 'kuwired'
+          app-name: 'azuredjangotutorial'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C29BCA7C0EF444F5857A76114D27B266 }}
