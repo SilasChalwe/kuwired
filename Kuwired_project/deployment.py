@@ -1,4 +1,4 @@
-import os 
+import os
 from .settings import *
 from .settings import BASE_DIR
 
@@ -23,15 +23,18 @@ MIDDLEWARE = [
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-
-conn_str = os.environ['AZURE_POSTGRESQL_CONNECTIONSTRING']
-conn_str_params = {pair.split('=')[0]: pair.split('=')[1] for pair in conn_str.split(' ')}
+# SQL Server Database configuration
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': conn_str_params['dbname'],
-        'HOST': conn_str_params['host'],
-        'USER': conn_str_params['user'],
-        'PASSWORD': conn_str_params['password'],
+        'ENGINE': 'sql_server.pyodbc',
+        'NAME': 'Kuwired-database',
+        'USER': os.environ['DB_USER'],  # your SQL Server username
+        'PASSWORD': os.environ['DB_PASSWORD'],  # your SQL Server password
+        'HOST': 'kuwireddb-server.database.windows.net',
+        'PORT': '1433',
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+            'extra_params': 'Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;',
+        }
     }
 }
