@@ -22,19 +22,17 @@ MIDDLEWARE = [
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# SQL Server Database configuration
 DATABASES = {
     'default': {
         'ENGINE': 'sql_server.pyodbc',
-        'NAME': 'Kuwired-database',
-        'USER': os.environ['DB_USER'],  # your SQL Server username
-        'PASSWORD': os.environ['DB_PASSWORD'],  # your SQL Server password
-        'HOST': 'kuwireddb-server.database.windows.net',
-        'PORT': '1433',
+        'NAME': 'Kuwired-database',  # Your database name
+        'USER': 'silaschalwe@outlook.com@kuwireddb-server',  # Your username
+        'PASSWORD': 'chalwe339657/68/1',  # Your password
+        'HOST': 'kuwireddb-server.database.windows.net',  # SQL Server host
+        'PORT': '1433',  # Default SQL Server port
         'OPTIONS': {
-            'driver': 'ODBC Driver 17 for SQL Server',
-            'extra_params': 'Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;',
-        }
+            'driver': 'ODBC Driver 17 for SQL Server',  # ODBC driver for SQL Server
+            'extra_params': 'TrustServerCertificate=no;Encrypt=yes;'
+        },
     }
 }
