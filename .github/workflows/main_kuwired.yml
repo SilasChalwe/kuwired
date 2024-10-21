@@ -29,7 +29,13 @@ jobs:
       
       - name: Install dependencies
         run: pip install -r requirements.txt
-        
+
+      - name: Run migrations
+        run: |
+          source venv/bin/activate
+          python manage.py makemigrations
+          python manage.py migrate
+
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
       - name: Zip artifact for deployment
@@ -59,7 +65,6 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
-      
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
@@ -67,3 +72,4 @@ jobs:
           app-name: 'kuwired'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FA54AB192967477686C28347C85B9921 }}
+          
