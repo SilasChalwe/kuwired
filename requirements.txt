@@ -10,5 +10,5 @@ tzdata==2024.2
 whitenoise==6.7.0
 
 # Add the following for SQL Server
-django-mssql-backend==2.10.1
+django-mssql-backend==2.8.1
 pyodbc==4.0.35
