@@ -1,8 +1,9 @@
 import os
 from django.core.wsgi import get_wsgi_application
 
-settings_module = 'kuwired_project.deployment' if 'WEBSITE_HOSTNAME' in os.environ else 'kuwired_project.settings'
+# Set the default settings module for the 'DJANGO_SETTINGS_MODULE' environment variable
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Kuwired_project.settings')  # Ensure this matches your project structure
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_module)
-
+# Create the WSGI application callable
 application = get_wsgi_application()
+
